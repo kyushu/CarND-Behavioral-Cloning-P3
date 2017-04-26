@@ -11,11 +11,7 @@ from keras.callbacks import ModelCheckpoint
 from keras.layers.convolutional import Convolution2D#, MaxPooling2D
 import matplotlib.pyplot as plt
 # import tensorflow as tf
-
-
 from utils import  generate_new_log, mod_csv
-
-
 
 def generator(samples, batch_size=32):
     """Generate batch sample
@@ -64,7 +60,7 @@ final_csv_file = 'driving_log_all.csv'
 # mode= 1 : only center image  
 #       2 : take all center, left and right image
 #       3 : randomly choose center, left or right
-mod_csv(main_data_dir, mode=3)
+mod_csv(main_data_dir, mode=2)
 generate_new_log(main_data_dir, target_csv_file, final_csv_file)
 
 
@@ -104,10 +100,12 @@ model.add(Lambda(lambda x: x/255.0 - 0.5, input_shape=(160, 320 , 3)))
 model.add(Convolution2D(24, 5, 5, subsample=(2,2), activation="relu"))
 model.add(Convolution2D(36, 5, 5, subsample=(2,2), activation="relu"))
 model.add(Convolution2D(48, 5, 5, subsample=(2,2), activation="relu"))
+model.add(Dropout(0.3))
 model.add(Convolution2D(64, 3, 3, activation="relu"))
+model.add(Dropout(0.3))
 model.add(Convolution2D(64, 3, 3, activation="relu"))
+model.add(Dropout(0.3))
 model.add(Flatten())
-# model.add(Dropout(0.5))
 model.add(Dense(100, activation='elu'))
 model.add(Dropout(0.5))
 model.add(Dense(50, activation='elu'))
@@ -139,7 +137,7 @@ history_object = model.fit_generator(train_generator,
     nb_val_samples=len(validation_samples), 
     verbose=1, 
     callbacks=callbacks_list,
-    nb_epoch=15)
+    nb_epoch=20)
 model.save('model.h5')
 
 

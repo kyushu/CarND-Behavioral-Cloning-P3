@@ -43,7 +43,7 @@ def mod_csv(main_data_dir, mode=2):
                     # only center image
                     csv_writer.writerow(line)
                 elif mode == 2:
-                    # all image indlude center, left and right
+                    # all images indlude center, left and right
                     csv_writer.writerow(line) 
                     # add Left camera image
                     line[0] = line[1]
@@ -54,26 +54,9 @@ def mod_csv(main_data_dir, mode=2):
                     line[3] = steer - 0.2
                     csv_writer.writerow(line)
                 elif mode == 3:
-                    # Use thid mode will get better behavior
+                    # Use this mode will get better behavior
                     sample = random_image(line)  
                     csv_writer.writerow(sample)                  
-                #     rnd = random.randint(1,3)
-                #     if rnd == 1:
-                #         # center
-                #         csv_writer.writerow(line)
-                #     elif rnd == 2:
-                #         # left
-                #         line[0] = line[1]
-                #         line[3] = steer + 0.2
-                #         csv_writer.writerow(line)
-                #     elif rnd == 3:
-                #         # right
-                #         line[0] = line[2]
-                #         line[3] = steer - 0.2
-                #         csv_writer.writerow(line)
-                # else:
-                #     # only center image
-                #     csv_writer.writerow(line)
 
         mod_file.close()
 
